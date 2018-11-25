@@ -37,7 +37,7 @@ def get_client(device_type, device_path, password=None):
     # Make a client
     if device_type == 'trezor':
         from . import trezori
-        client = trezori.TrezorClient(device=device, path=device_path)
+        client = trezori.TrezorClient(device=device, path=device_path, password=password)
     elif device_type == 'keepkey':
         from . import keepkeyi
         client = keepkeyi.KeepKeyClient(device=device, path=device_path)

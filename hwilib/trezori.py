@@ -12,6 +12,7 @@ from . import bech32
 
 import binascii
 import json
+import os
 
 class TxAPIPSBT(TxApi):
 
@@ -49,7 +50,7 @@ class TxAPIPSBT(TxApi):
 class TrezorClient(HardwareWalletClient):
 
     # device is an HID device that has already been opened.
-    def __init__(self, device, path):
+    def __init__(self, device, path, password=None):
         super(TrezorClient, self).__init__(device)
         device.close()
         self.client = Trezor(transport=get_transport("hid:"+path.decode()))
@@ -57,6 +58,8 @@ class TrezorClient(HardwareWalletClient):
         # if it wasn't able to find a client, throw an error
         if not self.client:
             raise IOError("no Device")
+
+        os.environ['PASSPHRASE'] = password
 
 
     # Must return a dict with the xpub
